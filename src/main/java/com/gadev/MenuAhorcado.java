@@ -19,10 +19,12 @@ public class MenuAhorcado {
             String palabra = BancoPalabras.palabraAleatoria();
             Ahorcado juego = new Ahorcado(palabra);
 
-            while (!juego.estaGanado() || !juego.estaPerdido()){
+            while (!juego.estaGanado()  && !juego.estaPerdido()){
 
                 char letra = pedirLetra(juego);
-                juego.intentarLetra(letra);
+                if (!juego.intentarLetra(letra)){
+                    System.out.println("Intentos restantes: " + juego.getIntentosRestantes());
+                }
 
                 System.out.println(juego.getProgreso());
             }
@@ -61,8 +63,8 @@ public class MenuAhorcado {
 
     private boolean preguntarJugarDeNuevo(){
         System.out.print("Quiere jugar de nuevo?: (S/N)");
-        String opcion = scanner.nextLine();
-        return opcion.equals("S");
+        String opcion = scanner.nextLine().toLowerCase();
+        return opcion.equals("s");
     }
 
 
