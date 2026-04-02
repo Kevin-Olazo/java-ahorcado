@@ -3,15 +3,13 @@ package com.gadev;
 import java.util.Scanner;
 
 public class MenuAhorcado {
-    private Scanner scanner;
+    private final Scanner scanner;
 
     public MenuAhorcado(){
         this.scanner = new Scanner(System.in);
     }
 
     public void start(){
-
-
 
         boolean jugarDeNuevo = true;
 
@@ -20,24 +18,30 @@ public class MenuAhorcado {
             Ahorcado juego = new Ahorcado(palabra);
 
             while (!juego.estaGanado()  && !juego.estaPerdido()){
-
+                mostrarEstado(juego);
                 char letra = pedirLetra(juego);
-                if (!juego.intentarLetra(letra)){
-                    System.out.println("Intentos restantes: " + juego.getIntentosRestantes());
-                }
-
-                System.out.println(juego.getProgreso());
+                juego.intentarLetra(letra);
             }
 
+            mostrarResultadoFinal(juego);
             jugarDeNuevo = preguntarJugarDeNuevo();
 
         }
 
     }
 
+    private void mostrarEstado(Ahorcado juego){
+        System.out.println(DibujoAhorcado.getFigure(juego.getIntentosRestantes()));
+        System.out.println(juego.getProgreso());
+    }
+
+    private void mostrarResultadoFinal(Ahorcado juego){
+
+    }
+
     private char pedirLetra(Ahorcado juego){
         while(true){
-            System.out.print("\nIngresa una letra:");
+            System.out.print("Ingresa una letra:");
             String input = scanner.nextLine().trim().toLowerCase();
 
             if (input.length() != 1){
@@ -66,7 +70,5 @@ public class MenuAhorcado {
         String opcion = scanner.nextLine().toLowerCase();
         return opcion.equals("s");
     }
-
-
 
 }
