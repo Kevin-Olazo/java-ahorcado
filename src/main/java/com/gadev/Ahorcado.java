@@ -68,7 +68,12 @@ public class Ahorcado {
         return usadas;
     }
 
-    public char[] getProgreso() {
-        return progreso;
+    public String getProgreso() {
+        //
+        StringBuilder sb = new StringBuilder();
+        for(char c : progreso){
+            sb.append(c).append(' ');
+        }
+        return sb.toString().trim();
     }
 }
