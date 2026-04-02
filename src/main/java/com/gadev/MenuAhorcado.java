@@ -9,21 +9,35 @@ public class MenuAhorcado {
         this.scanner = new Scanner(System.in);
     }
 
+    // Inicia el juego del ahorcado
     public void start(){
 
+        // Bucle principal para permitir jugar varias veces
         boolean jugarDeNuevo = true;
 
+        // Mientras el usuario quiera seguir jugando, se inicia una nueva partida
         while(jugarDeNuevo){
+            // Selecciona una palabra aleatoria del banco de palabras
             String palabra = BancoPalabras.palabraAleatoria();
+
+            // Crea una nueva instancia del juego de ahorcado con la palabra seleccionada
             Ahorcado juego = new Ahorcado(palabra);
 
+            // Bucle del juego, se repite hasta que el jugador gane o pierda
             while (!juego.estaGanado()  && !juego.estaPerdido()){
+                // Muestra el estado actual del juego
+                // (dibujo del ahorcado, el progreso de la palabra y las letras usadas)
                 mostrarEstado(juego);
+                // Pide al jugador que ingrese una letra y procesa su intento
                 char letra = pedirLetra(juego);
+                // Intenta la letra ingresada por el jugador y actualiza el estado del juego
                 juego.intentarLetra(letra);
             }
 
+            // Una vez que el juego ha terminado, se muestra el resultado final
             mostrarResultadoFinal(juego);
+
+            // Pregunta al jugador si desea jugar de nuevo
             jugarDeNuevo = preguntarJugarDeNuevo();
 
         }
@@ -31,12 +45,17 @@ public class MenuAhorcado {
     }
 
     private void mostrarEstado(Ahorcado juego){
-        System.out.println(DibujoAhorcado.getFigure(juego.getIntentosRestantes()));
-        System.out.println(juego.getProgreso());
+        System.out.println(DibujoAhorcado.getFigure(juego.getIntentosFallidos()));
+        System.out.println("Palabra: " + juego.getProgreso());
+        System.out.println("Letras usadas: " + juego.getUsadas());
     }
 
     private void mostrarResultadoFinal(Ahorcado juego){
-
+        if (juego.estaGanado()) {
+            System.out.println("Ganaste! La palabra era: " + juego.getProgreso() );
+        } else {
+            System.out.println("Perdiste! La palabra era: " );
+        }
     }
 
     private char pedirLetra(Ahorcado juego){
