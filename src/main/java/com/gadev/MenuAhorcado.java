@@ -17,6 +17,9 @@ public class MenuAhorcado {
 
         // Mientras el usuario quiera seguir jugando, se inicia una nueva partida
         while(jugarDeNuevo){
+            //  Muestra un mensaje al empezar una nueva partida
+            System.out.println("¡Adivina la palabra!");
+
             // Selecciona una palabra aleatoria del banco de palabras
             String palabra = BancoPalabras.palabraAleatoria();
 
@@ -30,8 +33,8 @@ public class MenuAhorcado {
                 mostrarEstado(juego);
                 // Pide al jugador que ingrese una letra y procesa su intento
                 char letra = pedirLetra(juego);
-                // Intenta la letra ingresada por el jugador y actualiza el estado del juego
-                juego.intentarLetra(letra);
+
+                boolean intentar = juego.intentarLetra(letra);
             }
 
             // Una vez que el juego ha terminado, se muestra el resultado final
@@ -42,26 +45,31 @@ public class MenuAhorcado {
 
         }
 
+        scanner.close();
+        System.out.println("Gracias por jugar al ahorcado! ¡Hasta la próxima!");
+
     }
 
     private void mostrarEstado(Ahorcado juego){
         System.out.println(DibujoAhorcado.getFigure(juego.getIntentosFallidos()));
-        System.out.println("Palabra: " + juego.getProgreso());
-        System.out.println("Letras usadas: " + juego.getUsadas());
+        System.out.println("Palabra : " + juego.getProgreso());
+        System.out.println("Letras usadas : " + juego.getUsadas());
+        System.out.println("Intentos restantes : " + juego.getIntentosRestantes());
     }
 
     private void mostrarResultadoFinal(Ahorcado juego){
+        mostrarEstado(juego);
         if (juego.estaGanado()) {
-            System.out.println("Ganaste! La palabra era: " + juego.getProgreso() );
+            System.out.println("Ganaste!");
         } else {
-            System.out.println("Perdiste! La palabra era: " );
+            System.out.println("Perdiste! \nLa palabra era: " + juego.getPalabraSecreta() );
         }
     }
 
     private char pedirLetra(Ahorcado juego){
         while(true){
-            System.out.print("Ingresa una letra:");
-            String input = scanner.nextLine().trim().toLowerCase();
+            System.out.print("Ingresa una letra: ");
+            String input = scanner.nextLine().trim().toUpperCase();
 
             if (input.length() != 1){
                 System.out.println("Ingresa una sola letra");
@@ -85,9 +93,9 @@ public class MenuAhorcado {
     }
 
     private boolean preguntarJugarDeNuevo(){
-        System.out.print("Quiere jugar de nuevo?: (S/N)");
-        String opcion = scanner.nextLine().toLowerCase();
-        return opcion.equals("s");
+        System.out.print("Quiere jugar de nuevo? (S/N): ");
+        String opcion = scanner.nextLine().toUpperCase().trim();
+        return opcion.equals("S");
     }
 
 }
