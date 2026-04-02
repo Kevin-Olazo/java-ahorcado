@@ -5,13 +5,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Ahorcado {
+    //
     private static final int MAX_INTENTOS = 6;
-
+    //
     private String palabraSecreta;
     private char[] progreso;
     private Set<Character> usadas;
     private int intentosRestantes;
 
+    //
     public Ahorcado(String palabra){
         this.palabraSecreta = palabra.toLowerCase();
         this.progreso = new char[this.palabraSecreta.length()];
@@ -20,11 +22,11 @@ public class Ahorcado {
         this.intentosRestantes = MAX_INTENTOS;
     }
 
+    //
     public boolean intentarLetra(char letra){
         letra = Character.toLowerCase(letra);
 
         if (usadas.contains(letra)){
-            System.out.println("Ya ingresaste esa letra");
             return false;
         }
 
@@ -43,5 +45,30 @@ public class Ahorcado {
         return encontrado;
     }
 
+    //
+    public boolean estaGanado(){
+        for (Character c : progreso){
+            if (c == '_'){
+                return false;
+            }
+        }
 
+        return true;
+    }
+    //
+    public boolean estaPerdido(){
+        return intentosRestantes == 0;
+    }
+
+    public int getIntentosRestantes() {
+        return intentosRestantes;
+    }
+
+    public Set<Character> getUsadas() {
+        return usadas;
+    }
+
+    public char[] getProgreso() {
+        return progreso;
+    }
 }
