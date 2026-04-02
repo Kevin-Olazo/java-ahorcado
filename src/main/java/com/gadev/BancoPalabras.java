@@ -1,12 +1,12 @@
 package com.gadev;
 
 public class BancoPalabras {
-    private static final String[] PALABRAS =  {
-            "Gato", "Perro", "Auto", "Animal"
+    private static final String[] PALABRAS = {
+            "Gato", "Perro", "Conejo"
     };
 
-    public String palabraAleatoria(){
-        int indiceAleatorio = (int) (Math.random() * PALABRAS.length);
-        return PALABRAS[indiceAleatorio];
+    public static String palabraAleatoria(){
+        int indice = (int) (Math.random() * PALABRAS.length);
+        return PALABRAS[indice];
     }
 }
